@@ -209,11 +209,12 @@ class Show(object):
     def latest_episode(self):
         """returns the latest episode that has aired already"""
         today = date.today()
-        eps = self.season(self.seasons).values()
-        eps.reverse()
-        for e in eps:
-            if (e.airdate is not None) and (e.airdate < today):
-                return e
+        for season_no in reversed(range(1,self.seasons+1)):
+            eps = self.season(season_no).values()
+            eps.reverse()
+            for e in eps:
+                if (e.airdate is not None) and (e.airdate < today):
+                    return e
 
     @property
     def synopsis(self):
